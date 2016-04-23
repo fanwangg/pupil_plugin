@@ -14,7 +14,7 @@ import numpy as np
 from pyglui import ui
 import zmq
 import json
-
+import socket
 
 import logging
 logger = logging.getLogger(__name__)
@@ -23,13 +23,14 @@ logger.setLevel(logging.DEBUG)
 
 
 class My_Server(Plugin):
+    PORT = "5566"
     """pupil server plugin"""
-    def __init__(self, g_pool,address="tcp://192.168.0.117:5566"):
+    def __init__(self, g_pool,address=""):#tcp://192.168.0.117:5566
         super(My_Server, self).__init__(g_pool)
         self.order = .9
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.PUB)
-        self.address = address
+        self.address = "tcp://"+self.getLocalIP()+":"+PORT
         self.set_server(address)
         self.menu = None
 
@@ -107,6 +108,10 @@ class My_Server(Plugin):
         """
         self.deinit_gui()
         self.context.destroy()
+
+    def getLocalIP(self):
+        return socket.gethostbyname(socket.gethostname())
+
 
             
 
