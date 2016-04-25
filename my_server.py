@@ -30,7 +30,7 @@ class My_Server(Plugin):
         self.order = .9
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.PUB)
-        self.address = "tcp://"+self.getLocalIP()+":"+PORT
+        self.address = "tcp://"+self.getLocalIP()+":"+self.PORT
         self.set_server(address)
         self.menu = None
 
